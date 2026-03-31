@@ -85,6 +85,66 @@
             object-fit: cover;
             width: 100%;
             height: 100%;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            overflow: auto;
+        }
+
+        .image-modal-content {
+            background: transparent;
+            border-radius: var(--border-radius);
+            max-width: 95%;
+            max-height: 95%;
+            text-align: center;
+            position: relative;
+        }
+
+        .image-modal-content img {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: var(--border-radius);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: white;
+            color: #000;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: grid;
+            place-items: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .image-modal-caption {
+            color: white;
+            margin-top: 0.75rem;
+            font-size: 1rem;
         }
 
         .product-info {
@@ -309,6 +369,15 @@
         <div class="products-grid" id="productsGrid"></div>
     </section>
 
+    <!-- Image Preview Modal -->
+    <div class="image-modal" id="imageModal" onclick="closeImageModal()">
+        <div class="image-modal-content" onclick="event.stopPropagation()">
+            <div class="image-modal-close" onclick="closeImageModal()">&times;</div>
+            <img id="imagePreview" src="" alt="">
+            <div class="image-modal-caption" id="imageCaption"></div>
+        </div>
+    </div>
+
     <!-- Checkout Modal -->
     <div class="modal" id="checkoutModal">
         <div class="modal-content">
@@ -425,7 +494,7 @@
             productsGrid.innerHTML = filteredProducts.map(product => `
                 <div class="product-card">
                     <div class="product-image">
-                        ${product.image ? `<img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;">` : product.emoji}
+                        ${product.image ? `<img src="${product.image}" alt="${product.name}" onclick="openImageModal('${product.image}', '${product.name}')">` : `<span onclick="openImageModal('', '${product.name}')">${product.emoji}</span>`}
                     </div>
                     <div class="product-info">
                         <h3>${product.name}</h3>
@@ -468,9 +537,9 @@
         function addToCart(productId) {
             const quantity = parseInt(document.getElementById(`qty-${productId}`).value) || 1;
             const product = products.find(p => p.id === productId);
-            
+
             const existingItem = cart.find(item => item.id === productId);
-            
+
             if (existingItem) {
                 existingItem.quantity += quantity;
             } else {
@@ -481,11 +550,36 @@
                     quantity: quantity
                 });
             }
-            
+
             saveCart();
             updateCartSummary();
             alert(`${product.name} added to cart!`);
             document.getElementById(`qty-${productId}`).value = 1;
+        }
+
+        function openImageModal(imageSrc, productName) {
+            const imageModal = document.getElementById('imageModal');
+            const imagePreview = document.getElementById('imagePreview');
+            const imageCaption = document.getElementById('imageCaption');
+
+            if (imageSrc) {
+                imagePreview.src = imageSrc;
+                imagePreview.alt = productName;
+                imageCaption.textContent = productName;
+            } else {
+                imagePreview.src = '';
+                imagePreview.alt = productName;
+                imageCaption.textContent = `${productName} (image not available)`;
+            }
+
+            imageModal.style.display = 'flex';
+        }
+
+        function closeImageModal() {
+            const imageModal = document.getElementById('imageModal');
+            const imagePreview = document.getElementById('imagePreview');
+            imageModal.style.display = 'none';
+            imagePreview.src = '';
         }
 
         // Update cart summary
