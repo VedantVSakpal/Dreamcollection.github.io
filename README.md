@@ -14,6 +14,7 @@ A beautiful, modern website celebrating dreams, aspirations, and the journey to 
 
 - **index.html** - Home page with featured collections and introduction
 - **dreams.html** - Explore different types of dreams and aspirations
+- **shop.html** - Jewelry shop with 8 beautiful products and shopping cart
 - **about.html** - Learn about our mission, vision, and values
 - **contact.html** - Get in touch with us via contact form
 - **styles.css** - All styling and responsive design
@@ -26,11 +27,21 @@ A beautiful, modern website celebrating dreams, aspirations, and the journey to 
 
 ## 🎨 Design Highlights
 
-- Beautiful gradient color scheme (Indigo to Purple)
+- Beautiful gradient color scheme (Indigo to Black)
 - Smooth hover effects and animations
 - Card-based layout for content organization
 - Mobile-first responsive design
 - Professional typography and spacing
+
+## 🛍️ Shopping Features
+
+- **8 Jewelry Products**: Diamond rings, necklaces, bracelets, earrings, and more
+- **Shopping Cart**: Add/remove items with quantity control
+- **Price Display**: ₹ (Indian Rupees) pricing for all products
+- **Cart Summary**: Real-time cart count and total calculation
+- **Checkout**:  Order confirmation modal with summary
+- **Data Persistence**: Cart saved in browser's local storage
+- **Responsive Design**: Works perfectly on mobile and desktop
 
 ## 🌐 Domain
 
