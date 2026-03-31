@@ -357,11 +357,11 @@
 
         <!-- Category Tabs -->
         <div class="category-tabs">
-            <button class="category-btn active" onclick="filterCategory('all')">All Products</button>
-            <button class="category-btn" onclick="filterCategory('rings')">Rings</button>
-            <button class="category-btn" onclick="filterCategory('necklaces')">Necklaces</button>
-            <button class="category-btn" onclick="filterCategory('earrings')">Earrings</button>
-            <button class="category-btn" onclick="filterCategory('bracelets')">Bracelets</button>
+            <button class="category-btn active" data-cat="all" onclick="filterCategory('all')">All Products</button>
+            <button class="category-btn" data-cat="rings" onclick="filterCategory('rings')">Rings</button>
+            <button class="category-btn" data-cat="necklaces" onclick="filterCategory('necklaces')">Necklaces</button>
+            <button class="category-btn" data-cat="earrings" onclick="filterCategory('earrings')">Earrings</button>
+            <button class="category-btn" data-cat="bracelets" onclick="filterCategory('bracelets')">Bracelets</button>
         </div>
 
         <!-- Products Grid -->
@@ -485,12 +485,6 @@
         let cart = [];
         let currentCategory = 'all';
 
-        // Initialize shop
-        function initializeShop() {
-            displayProducts('all');
-            loadCart();
-        }
-
         // Display products by category
         function displayProducts(category) {
             const productsGrid = document.getElementById('productsGrid');
@@ -521,12 +515,16 @@
         // Filter category
         function filterCategory(category) {
             currentCategory = category;
-            
+
+            // Update URL hash for refresh persistence
+            window.location.hash = category;
+
             // Update active button
             document.querySelectorAll('.category-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            const selectedButton = document.querySelector(`.category-btn[data-cat="${category}"]`);
+            if (selectedButton) selectedButton.classList.add('active');
 
             // Update title
             const titles = {
@@ -536,10 +534,27 @@
                 'earrings': 'Earrings',
                 'bracelets': 'Bracelets'
             };
-            document.getElementById('categoryTitle').textContent = titles[category];
+            document.getElementById('categoryTitle').textContent = titles[category] || 'All Products';
 
             // Display products
             displayProducts(category);
+        }
+
+        // Initialize shop
+        function initializeShop() {
+            const hashCategory = window.location.hash.replace('#', '');
+            const validCategories = ['all', 'rings', 'necklaces', 'earrings', 'bracelets'];
+            const initialCategory = validCategories.includes(hashCategory) ? hashCategory : 'all';
+
+            filterCategory(initialCategory);
+            loadCart();
+
+            window.addEventListener('hashchange', () => {
+                const newCategory = window.location.hash.replace('#', '');
+                if (validCategories.includes(newCategory)) {
+                    filterCategory(newCategory);
+                }
+            });
         }
 
         // Add to cart
