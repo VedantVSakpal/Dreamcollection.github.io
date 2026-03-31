@@ -95,6 +95,23 @@ body {
     justify-content: center;
 }
 
+.hero-content {
+    max-width: 800px;
+}
+
+.hero-logo {
+    margin-bottom: 2rem;
+}
+
+.logo-image {
+    max-width: 200px;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background-color: white;
+    padding: 1rem;
+}
+
 .hero-content h1 {
     font-size: 3.5rem;
     margin-bottom: 1rem;
@@ -281,6 +298,10 @@ body {
         font-size: 1rem;
     }
 
+    .logo-image {
+        max-width: 150px;
+    }
+
     .featured h2,
     .about-preview h2 {
         font-size: 2rem;
@@ -303,6 +324,10 @@ body {
 
     .hero-content h1 {
         font-size: 1.8rem;
+    }
+
+    .logo-image {
+        max-width: 120px;
     }
 
     .featured-grid {

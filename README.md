@@ -17,6 +17,12 @@ A beautiful, modern website celebrating dreams, aspirations, and the journey to 
 - **about.html** - Learn about our mission, vision, and values
 - **contact.html** - Get in touch with us via contact form
 - **styles.css** - All styling and responsive design
+- **images/** - Directory for website images and photos
+
+## 🖼️ Images
+
+- **Logo**: Place your logo image as `images/logo.png` (recommended size: 200x200px)
+- The logo will automatically appear on the homepage hero section
 
 ## 🎨 Design Highlights
 
